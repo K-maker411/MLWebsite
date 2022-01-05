@@ -1,0 +1,56 @@
+﻿@page "/Machine Learning Pages/Support Vector Machines Part 1"
+<main>
+    <article>
+        <header>
+            <h1>Support Vector Machines: Main Ideas</h1>
+            <h7>Prerequisites: Cross Validation, Bias and Variance, Lagrange Multipliers, the Lagrangian, and KKT Conditions</h7>
+        </header>
+        <br />
+        <p>
+            I will be using the example presented in 
+            <MudLink Href="https://youtu.be/efR1C6CvhmE" Underline="Underline.Hover" Style="font-size: inherit">Josh Starmer's video about Support Vector Machines, </MudLink>
+            as it felt like a good starting point for a relatively mysterious concept. 
+        </p>
+        <p>
+            <img src="sample-data/SVM1.png"/>
+            <br />
+            Let's say that the red dots represent non-obese mice, the green dots represent obese mice, and the orange line represents
+            the threshold. Points that lie on the left of the threshold represent non-obese mice and those that lie on the right of the threshold
+            represent obese mice. 
+        </p>
+        <br />
+        <p>
+            Now, imagine that a new mouse is recorded and placed in this position on the graph:
+            <img src="sample-data/SVM2.png" />
+            <br />
+            The mouse is much closer to the non-obese side than it is to the obese side, but because of the placement of the threshold,
+            it is still being classified as obese. This is an indication that the threshold is not good.
+        </p>
+        <br />
+        <p>
+            Now, let's imagine another scenario:
+            <img src="sample-data/SVM3.png" />
+            <br />
+            The shortest distance between the observations and the threshold is known as the 
+            <b>margin.</b> In the scenario above, the distances between the edge-most observations on each side
+            of the threshold and the threshold itself are the same, meaning both dotted lines illustrate the margin. 
+            When the threshold is halfway between the two observations, the margin is at its largest.
+            Using a threshold that gives us the largest possible margin to make classifications with
+            is known as using the <b>maximal margin classifier.</b>
+        </p>
+        <br />
+        <p>
+            <img src="sample-data/SVM4.png"/>
+            <br />
+            If the training data looked like it does in the above chart, the maximum margin classifier would be extremely close to the 
+            obese observations in order to sit at the point between the edge-most observations. This makes maximal margin classifiers very
+            susceptible to outliers
+        </p>
+
+        
+    </article>
+</main>
+
+@code {
+
+}

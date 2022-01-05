@@ -1,0 +1,24 @@
+﻿@inherits MathJaxContentComponent
+<div id="expand">
+    <p>
+        (Explanation adapted from [insert number for math stackexchange post here])
+        <br />
+        <br />
+        If we disregard minimizing the Lagrangian with respect to $\mathbf{w}$ and $b$ for a moment and only consider maximizing it with respect to $\alpha$ by 
+        selecting $\mathbf{w}$ and $b$ such that $t_{i}(\mathbf{w}^{\top} \mathbf{x}_{i} + b) \lt 1$, the negative sum portion of the Lagrangian will 
+        turn positive, meaning we could choose values of $\alpha_{i}$ such that the Lagrangian approaches +$\infty$. This would mean that we would fail to minimize 
+        $\frac{1}{2} \mathbf{w}^{\top} \mathbf{w}$ and thus avoid reaching our goal. 
+    </p>
+    <br />
+    <p>
+        If we now think about the true constraint, $t_{i}(\mathbf{w}^{\top} \mathbf{x}_{i} + b) \geq 1$, and choose values of $\mathbf{w}$ and $b$ such that
+        this condition is fulfilled, because $\alpha_{i} \geq 0$, the negative summation will be 0 or a negative number. We can then say that the maximum value of the 
+        Lagrangian with respect to $\alpha$ is equal to $\frac{1}{2} \mathbf{w}^{\top} \mathbf{w}$ if that condition is fulfilled. Thus, we can conclude that minimizing $\frac{1}{2} \mathbf{w}^{\top} \mathbf{w}$ with 
+        respect to $\mathbf{w}$ and $b$ is equal to doing the same minimization on the maximization of the Lagrangian with respect to $\alpha$, more easily shown through the following expression:
+        $$\underset{\mathbf{w}, b}{\operatorname{min}} \frac{1}{2} \mathbf{w}^{\top} \mathbf{w} = \underset{\mathbf{w}, b}{\operatorname{min}} \underset{\alpha}{\operatorname{max}} \mathcal{L} (\mathbf{w}, b, \alpha)$$ 
+    </p>
+</div>
+
+@code {
+
+}

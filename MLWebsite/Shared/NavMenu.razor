@@ -1,0 +1,55 @@
+﻿@inject NavigationManager NavManager
+
+<MudNavMenu>
+    <MudList Clickable="true">
+        <MudListItem @onclick="@GoToHomePage">
+            Home
+        </MudListItem>
+        <MudListItem Text="Machine Learning">
+            <NestedList>
+                <MudListItem Text="The Math Behind Support Vector Machines">
+                    <NestedList>
+                        <MudListItem @onclick="@GoToSVM1">
+                            Main Ideas
+                        </MudListItem>
+                        <MudListItem @onclick="@GoToSVM2">
+                            Linear SVMs
+                        </MudListItem>
+                        <MudListItem @onclick="@GoToSVM3">
+                            Kernelized SVMs
+                        </MudListItem>
+                    </NestedList>
+                </MudListItem>
+            </NestedList>
+        </MudListItem>
+    </MudList>
+    @*<MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudTreeView T="string" CanHover="true">
+        <MudTreeViewItem Value='"Machine Learning Concepts"' > 
+            <MudTreeViewItem Value='"Support Vector Machines"' @onclick="@GoToSVMPage"/>
+        </MudTreeViewItem>
+    </MudTreeView>*@
+</MudNavMenu>
+
+@code {
+
+    private void GoToHomePage()
+    {
+        NavManager.NavigateTo("/");
+    }
+
+    private void GoToSVM1()
+    {
+        NavManager.NavigateTo("/Machine Learning Pages/Support Vector Machines Part 1"); 
+    }
+
+    private void GoToSVM2()
+    {
+        NavManager.NavigateTo("/Machine Learning Pages/Support Vector Machines Part 2"); 
+    }
+
+    private void GoToSVM3()
+    {
+        NavManager.NavigateTo("/Machine Learning Pages/Support Vector Machines Part 3"); 
+    }
+}
