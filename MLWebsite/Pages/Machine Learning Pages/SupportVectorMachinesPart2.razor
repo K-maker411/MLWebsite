@@ -91,6 +91,9 @@
             $$
             $\text{subject to } t_{i}(\mathbf{w}^{\top} \mathbf{x}_{i} + b) \geq 1 - \zeta_{i} \text{ and } \zeta_{i} \geq 0 \text{ for } i = 1, 2, \cdots, m$
         </p>
+        <p> 
+            The reason $\sum\limits_{i=1}^{m} \zeta_{i}$ is added at the end is because if it did not exist, we could choose a very large value of $\zeta_{i}$ and satisfy $t_{i}(\mathbf{w}^{\top} \mathbf{x}_{i} + b) \geq 1 - \zeta_{i}$ without being penalized.
+        </p>
         <br />
         <h3>Deriving the Dual Problem</h3>
         <p>Before deriving the dual problem, we need to discuss the duality principle in optimization and review the method of Lagrange multipliers.</p>
@@ -189,7 +192,53 @@
         </p>
         <br />
         <p>
-            Now, we can derive the dual problem for the hard margin SVM.
+            Now, we can derive the dual problem for the hard margin SVM. If we rearrange $\nabla_{\mathbf{w}} \mathcal{L}=\mathbf{w}-\sum\limits_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}=\mathbf{0}$, we can find that the following is true of $\mathbf{w}$:
+            $$\mathbf{w} = \sum\limits_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}$$
+            <br />
+            Let us now substitute every $\mathbf{w}$ in the Lagrangian with $\sum\limits_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}$:
+            $$
+            \begin{aligned}
+            W(\alpha, b)=\frac{1}{2}\left(\sum_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}\right) \cdot\left(\sum_{j=1}^{m} \alpha_{j} t_{j} \mathbf{x}_{j}\right)-\sum_{i=1}^{m} \alpha_{i}\left[t_{i}\left(\left(\sum_{j=1}^{m} \alpha_{j} t_{j} \mathbf{x}_{j}\right) \cdot \mathbf{x}_{i}+b\right)-1\right] \\
+            =\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-\sum_{i=1}^{m} \alpha_{i} t_{i}\left(\left(\sum_{j=1}^{m} \alpha_{j} t_{j} \mathbf{x}_{j}\right) \cdot \mathbf{x}_{i}+b\right)+\sum_{i=1}^{m} \alpha_{i} \\
+            =\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-\sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-b \sum_{i=1}^{m} \alpha_{i} t_{i}+\sum_{i=1}^{m} \alpha_{i} \\
+            =\sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-b \sum_{i=1}^{m} \alpha_{i} t_{i}
+            \end{aligned}
+            $$
+            <br />
+            We can do something similar with $b$. However, given that $\frac{\partial \mathcal{L}}{\partial b}=-\sum\limits_{i=1}^{m} \alpha_{i} t_{i}=0$, if we see $\sum\limits_{i=1}^{m} \alpha_{i} t_{i}$, we can substitute it with 0 and simplify from there. We can see that the term exists on the right-hand side of the 
+            function, meaning we can simplify it to the following:
+            $$
+            W(\alpha) = \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            $$
+            This function is known as the <b>Wolfe dual Lagrangian function</b>, and we can now use this to define the <b>Wolfe dual problem for hard margin SVMs</b>:
+        </p>
+        <p style="text-align: center">
+            $$
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            $$
+            $$\text{subject to } \alpha_{i} \geq 0 \text{ for } i=1,2, \cdots, m$$
+            $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$
+        </p>
+        <p>
+            Normally, the Wolfe dual Lagrangian problem is constrained by setting the gradient to 0 (meaning each partial derivative is set to 0). The only reason we added $\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$ is because 
+            we need it to get rid of $b$ from the function. However, applying the constraint $\mathbf{w} = \sum\limits_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}$ is not necessary because we can solve the problem without it.
+        </p>
+        <br />
+        <br />
+        <p>
+            We can now also define the <b>Wolfe dual problem for soft margin SVMs</b>:
+        </p>
+        <p style="text-align: center">
+            $$
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            $$
+            $$\text{subject to } 0 \leq \alpha_{i} \leq C \text{ for } i=1,2, \cdots, m$$
+            $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$
+        </p>
+        <p>
+            The only difference between this dual problem and the hard margin dual problem is that $\alpha_{i}$ must be less than or equal to $C$. The introduction of this constraint
+            is necessary because, without slack, $\alpha_{i}\to+\infty$ when the constraints are violated, which occurs when points are misclassified. Enforcing $C$ as the upper bound limits $\alpha_{i}$ such that misclassifications are possible. This also illustrates
+            how changing the value of $C$ can change the number of misclassifications allowed and how the margin is constructed. 
         </p>
     </article>
 </main>
