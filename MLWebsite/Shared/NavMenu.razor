@@ -10,12 +10,9 @@
                 <MudListItem Text="The Math Behind Support Vector Machines">
                     <NestedList>
                         <MudListItem @onclick="@GoToSVM1">
-                            Main Ideas
-                        </MudListItem>
-                        <MudListItem @onclick="@GoToSVM2">
                             Linear SVMs
                         </MudListItem>
-                        <MudListItem @onclick="@GoToSVM3">
+                        <MudListItem @onclick="@GoToSVM2">
                             Kernelized SVMs
                         </MudListItem>
                     </NestedList>
@@ -46,10 +43,5 @@
     private void GoToSVM2()
     {
         NavManager.NavigateTo("/Machine Learning Pages/Support Vector Machines Part 2"); 
-    }
-
-    private void GoToSVM3()
-    {
-        NavManager.NavigateTo("/Machine Learning Pages/Support Vector Machines Part 3"); 
     }
 }
