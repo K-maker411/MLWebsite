@@ -242,7 +242,7 @@
             how changing the value of $C$ can change the number of misclassifications allowed and how the margin is constructed. 
         </p>
         <br />
-        <h3>Computing $\mathbf{w}$, $b$</h3>
+        <h3>Computing $\mathbf{w}$ and $b$</h3>
         <p>
             Solving the Wolfe dual problem gives us a vector $\alpha$ of all Lagrange multipliers, and because the original goal of the primal problem was to find $\mathbf{w}$ and $b$, we can use $\alpha$ to compute both.
             Finding $\mathbf{w}$ is straightforward, given that we know that $\mathbf{w} = \sum\limits_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}$. Once we find $\mathbf{w}$, we can use the primal problem constraint $t_{i}(\mathbf{w}^{\top} \mathbf{x} + b) - 1 \geq 0$ to find $b$.
