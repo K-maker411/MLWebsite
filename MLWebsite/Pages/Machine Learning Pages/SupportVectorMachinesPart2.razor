@@ -1,6 +1,45 @@
 ﻿@page "/Machine Learning Pages/Support Vector Machines Part 2"
+@inherits MathJaxContentComponent
 
-<h3>Support Vector Machines: Kernelized SVMs</h3>
+<main>
+    <article>
+        <header>
+            <h1>The Mathematics of Kernelized SVMs</h1>
+            <h7>
+                Prerequisites: <a href="/Machine Learning Pages/Support Vector Machines Part 1" style="color: rgb(89,74,226)">Linear SVMs</a> and the content covered there.
+            </h7>
+        </header>
+        <br />
+        <h3>Non-linearly Separable Data</h3>
+        <p>
+            As briefly mentioned at the end of the previous SVM article, both hard margin and soft margin SVMs assume that the best way to classify a dataset is using a line, meaning the data is linearly separable.
+            However, in the case of non-linearly separable data, we can transform the data to make it linearly separable in higher dimensions. For example, we can use the following polynomial mapping to
+            transform each 2-dimensional vector into a 3-dimensional vector:
+            $$\phi(\mathbf{x}) = \phi(\mathbf{x})=\phi\pmatrix{x_{1} \\ x_{2}} = \pmatrix{x_{1}{ }^{2} \\ \sqrt{2} x_{1} x_{2} \\ x_{2}{ }^{2}}$$
+        </p>
+        <p>
+            Now, let us reintroduce the Wolfe dual Lagrangian problem for the soft margin SVM we discussed previously:
+        </p>
+        <p style="text-align: center">
+            $$
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            $$
+            $$\text{subject to } \alpha_{i} \geq 0 \text{ for } i=1,2, \cdots, m$$
+            $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$
+        </p>
+        <p>
+            As shown, we do not need to know the value of a training example, but rather the dot product of two training examples.
+            Consider the example of two 2D vectors $\mathbf{a}$ and $\mathbf{b}$. If we first transform the vectors from 2D to 3D and then take the dot product between them,
+            we see an interesting result:
+            $$
+            \begin{align}
+            \phi(\mathbf{a})^{\top} \phi(\mathbf{b}) = \left(\pmatrix{a_{1}{}^{2} \\ \sqrt{2} a_{1} a_{2} \\ a_{2}{}^2} \right)^{\top} \pmatrix{b_{1}{}^{2} \\ \sqrt{2} b_{1} b_{2} \\ b_{2}{}^2} = a_{1}{}^{2} b_{1}{}^2 + 2a_{1} b_{1} a_{2} b_{2} + a_{2}{}^2 b_{2}{}^2 = (a_{1} b_{1} + a_{2} b_{2})^{2} = 
+            \left(\pmatrix{a_{1} \\ a_{2}}^{\top} \pmatrix{b_{1} \\ b_{2}} \right)^{2} = (\mathbf{a}^{\top} \mathbf{b})^{2}
+            \end{align}
+            $$
+        </p>
+    </article>
+</main>
 
 @code {
 
