@@ -18,13 +18,13 @@
             $$\phi(\mathbf{x}) = \phi(\mathbf{x})=\phi\pmatrix{x_{1} \\ x_{2}} = \pmatrix{x_{1}{ }^{2} \\ \sqrt{2} x_{1} x_{2} \\ x_{2}{ }^{2}}$$
         </p>
         <p>
-            Now, let us reintroduce the Wolfe dual Lagrangian problem for the soft margin SVM we discussed previously:
+            Now, let us reintroduce the Wolfe dual Lagrangian problem for soft margin SVMs we discussed previously:
         </p>
         <p style="text-align: center">
             $$
-            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i}^{\top} \cdot \mathbf{x}_{j}
             $$
-            $$\text{subject to } \alpha_{i} \geq 0 \text{ for } i=1,2, \cdots, m$$
+            $$\text{subject to } 0 \leq \alpha_{i} \leq C \text{ for } i=1,2, \cdots, m$$
             $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$
         </p>
         <p>
@@ -32,15 +32,67 @@
             Consider the example of two 2D vectors $\mathbf{a}$ and $\mathbf{b}$. If we first transform the vectors from 2D to 3D and then take the dot product between them,
             we see an interesting result:
             $$
-            \begin{align}
             \phi(\mathbf{a})^{\top} \phi(\mathbf{b}) = \left(\pmatrix{a_{1}{}^{2} \\ \sqrt{2} a_{1} a_{2} \\ a_{2}{}^2} \right)^{\top} \pmatrix{b_{1}{}^{2} \\ \sqrt{2} b_{1} b_{2} \\ b_{2}{}^2} = a_{1}{}^{2} b_{1}{}^2 + 2a_{1} b_{1} a_{2} b_{2} + a_{2}{}^2 b_{2}{}^2 = (a_{1} b_{1} + a_{2} b_{2})^{2} = 
             \left(\pmatrix{a_{1} \\ a_{2}}^{\top} \pmatrix{b_{1} \\ b_{2}} \right)^{2} = (\mathbf{a}^{\top} \mathbf{b})^{2}
-            \end{align}
             $$
+            The dot product of the transformed vectors is equal to $(\mathbf{a}^{\top} \mathbf{b})^{2}$, meaning we do not need to transform the vectors at all. Instead, we can just square the dot product of the two vectors and we will obtain the same result as if we had taken the dot product of the transformed
+            vectors. We can define this as the function $K(\mathbf{a}, \mathbf{b}) = (\mathbf{a}^{\top} \mathbf{b})^{2}$. This is an example of a <b>kernel function</b>, which computes the result of a dot product of two vectors in a different space (Kowalczyk 75). Listed below are some of the most commonly used kernel functions:
+        </p>
+        <p style="text-align: center">
+            $$
+            \begin{aligned}
+            \text { Linear: } & K(\mathbf{a}, \mathbf{b})=\mathbf{a}^{\top} \mathbf{b} \\
+            \text { Polynomial: } & K(\mathbf{a}, \mathbf{b})=(\gamma \mathbf{a}^{\top} \mathbf{b}+r)^{d} \\
+            \text { Gaussian RBF: } & K(\mathbf{a}, \mathbf{b})=\exp (-\gamma\|\mathbf{a}-\mathbf{b}\|^{2}) \\
+            \text { Sigmoid: } & K(\mathbf{a}, \mathbf{b})=\tanh (\gamma \mathbf{a}^{\top} \mathbf{b}+r)
+            \end{aligned}
+            $$
+        </p>
+        <p>
+           Mathematically, kernel functions respect a set of conditions known as Mercer's conditions. However, some kernels, such as the sigmoid kernel, tend to perform well while not fully respecting the conditions. 
+           <div style="display: inline; cursor: pointer; color: rgb(89,74,226);" @onclick="() => isOpened1 = !isOpened1">[What are Mercer's Conditions?]</div>
+           @if (isOpened1)
+            {
+                <MLWebsite.Pages.Extras.Mercer_sConditionsExplanation></MLWebsite.Pages.Extras.Mercer_sConditionsExplanation>
+            }
+        </p>
+        <br />
+        <br />
+        <h3>The Kernel Trick</h3>
+        <p>
+            Let us define a kernel $K(\mathbf{x}_{i}, \mathbf{x}_{j}) = \mathbf{x}_{i}^{\top} \cdot \mathbf{x}_{j}$. We can now use substitution to find a prediction function for a new vector $\mathbf{x}_{n}$:
+            $$
+            \begin{aligned}
+            h_{\mathbf{w}, b}\left(\phi\left(\mathbf{x}_{n}\right)\right) &={\mathbf{w}}^{\top} \phi\left(\mathbf{x}_{n}\right)+b=\left(\sum_{i=1}^{m} \alpha_{i} t_{i} \phi\left(\mathbf{x}_{i}\right)\right)^{\top} \phi\left(\mathbf{x}_{n}\right)+b \\
+            &=\sum_{i=1}^{m} \alpha_{i} t_{i}\left(\phi\left(\mathbf{x}_{i}\right)^{\top} \phi\left(\mathbf{x}_{n}\right)\right)+b \\
+            &=\sum_{\substack{i=1 \\ \alpha_{i} > 0}}^{m} \alpha_{i} t_{i} K\left(\mathbf{x}_{i}, \mathbf{x}_{n}\right)+b
+            \end{aligned}
+            $$
+            Replacing the dot product of the two transformed vectors with the kernel function is known as applying the <b>kernel trick</b>. Remember that $\alpha_{i} > 0$ for support vectors, meaning predictions involve the dot product of some $\mathbf{x}_{n}$ with support vectors. 
+            With this same logic, we can define the <b>kernelized Wolfe dual Lagrangian problem for soft margin SVMs</b>: 
+        </p>
+        <p style="text-align: center">
+            $$
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} K\left(\mathbf{x}_{i} \cdot \mathbf{x}_{j}\right)
+            $$
+            $$\text{subject to } 0 \leq \alpha_{i} \leq C \text{ for } i=1,2, \cdots, m$$
+            $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$
+        </p>
+        <p>
+            Finally, we can compute $b$:
+            $$
+            b = \frac{1}{n}\sum_{\substack{i=1 \\ \alpha_{i} > 0}}^{m} \left(t_{i} - \mathbf{w}^{\top} \phi \left(\mathbf{x}_{i}\right)\right)
+            = \frac{1}{n}\sum_{\substack{i=1 \\ \alpha_{i} > 0}}^{m} \left(t_{i} - \left(\sum_{j = 1}^{m} \alpha_{j} t_{j} \phi\left(\mathbf{x}_{j}\right)\right)^{\top} \phi \left(\mathbf{x}_{i}\right)\right)
+            = \frac{1}{n}\sum_{\substack{i=1 \\ \alpha_{i} > 0}}^{m} \left(t_{i} - \sum_{\substack{j=1 \\ \alpha_{j} > 0}}^{m} \alpha_{j} t_{j} K\left(\mathbf{x}_{i}, \mathbf{x}_{j} \right)\right)    
+            $$
+        </p>
+        <h3>Thank you!</h3>
+        <p>
+            This concludes my notes on Support Vector Machines. I hope you found them useful.
         </p>
     </article>
 </main>
 
 @code {
-
+    bool isOpened1;
 }

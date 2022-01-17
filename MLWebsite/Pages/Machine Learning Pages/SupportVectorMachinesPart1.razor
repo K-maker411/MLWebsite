@@ -201,20 +201,20 @@
             W(\alpha, b)=\frac{1}{2}\left(\sum_{i=1}^{m} \alpha_{i} t_{i} \mathbf{x}_{i}\right) \cdot\left(\sum_{j=1}^{m} \alpha_{j} t_{j} \mathbf{x}_{j}\right)-\sum_{i=1}^{m} \alpha_{i}\left[t_{i}\left(\left(\sum_{j=1}^{m} \alpha_{j} t_{j} \mathbf{x}_{j}\right) \cdot \mathbf{x}_{i}+b\right)-1\right] \\
             =\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-\sum_{i=1}^{m} \alpha_{i} t_{i}\left(\left(\sum_{j=1}^{m} \alpha_{j} t_{j} \mathbf{x}_{j}\right) \cdot \mathbf{x}_{i}+b\right)+\sum_{i=1}^{m} \alpha_{i} \\
             =\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-\sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-b \sum_{i=1}^{m} \alpha_{i} t_{i}+\sum_{i=1}^{m} \alpha_{i} \\
-            =\sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}-b \sum_{i=1}^{m} \alpha_{i} t_{i}
+            =\sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i}^{\top} \cdot \mathbf{x}_{j}-b \sum_{i=1}^{m} \alpha_{i} t_{i}
             \end{aligned}
             $$
             <br />
             We can do something similar with $b$. However, given that $\frac{\partial \mathcal{L}}{\partial b}=-\sum\limits_{i=1}^{m} \alpha_{i} t_{i}=0$, if we see $\sum\limits_{i=1}^{m} \alpha_{i} t_{i}$, we can substitute it with 0 and simplify from there. We can see that the term exists on the right-hand side of the 
             function, meaning we can simplify it to the following:
             $$
-            W(\alpha) = \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            W(\alpha) = \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i}^{\top} \cdot \mathbf{x}_{j}
             $$
             This function is known as the <b>Wolfe dual Lagrangian function</b>, and we can now use this to define the <b>Wolfe dual problem for hard margin SVMs</b>:
         </p>
         <p style="text-align: center">
             $$
-            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i}^{\top} \cdot \mathbf{x}_{j}
             $$
             $$\text{subject to } \alpha_{i} \geq 0 \text{ for } i=1,2, \cdots, m$$
             $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$
@@ -230,7 +230,7 @@
         </p>
         <p style="text-align: center">
             $$
-            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i} \cdot \mathbf{x}_{j}
+            \underset{\alpha}{\operatorname{max}} \sum_{i=1}^{m} \alpha_{i}-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_{i} \alpha_{j} t_{i} t_{j} \mathbf{x}_{i}^{\top} \cdot \mathbf{x}_{j}
             $$
             $$\text{subject to } 0 \leq \alpha_{i} \leq C \text{ for } i=1,2, \cdots, m$$
             $$\sum\limits_{i=1}^{m} \alpha_{i} t_{i} = 0$$

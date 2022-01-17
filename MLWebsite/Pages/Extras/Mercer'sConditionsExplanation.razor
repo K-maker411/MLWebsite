@@ -1,0 +1,25 @@
+﻿@inherits MathJaxContentComponent
+<div id="expand">
+    <p>
+        (Explanation from https://youtu.be/XUj5JbQihlU, add as inline citation later at the end of the paragraph)
+        <br />
+        <br />
+        If a kernel function $K(\mathbf{a}, \mathbf{b})$ respects Mercer's conditions, then there is a function that maps $\mathbf{a}$ and $\mathbf{b}$ such that $K(\mathbf{a}, \mathbf{b}) = \phi(\mathbf{a})^{\top} \phi(\mathbf{b})$ (Geron 236).  
+        The first condition states that the function must be symmetric, meaning $K(\mathbf{a}, \mathbf{b}) = K(\mathbf{b}, \mathbf{a})$.  In order to define the second condition, we define a <b>Gram matrix</b> (sometimes called a <b>kernel matrix</b>) $G$ as follows:
+        $$G = 
+        \begin{bmatrix}
+            K(\mathbf{x}_{1}, \mathbf{x}_{1}) & K(\mathbf{x}_{1}, \mathbf{x}_{2}) & \cdots & K(\mathbf{x}_{1}, \mathbf{x}_{n}) \\
+            K(\mathbf{x}_{2}, \mathbf{x}_{1}) & K(\mathbf{x}_{2}, \mathbf{x}_{2}) & \cdots & K(\mathbf{x}_{2}, \mathbf{x}_{n}) \\
+            \vdots & \vdots & \ddots & \vdots \\
+            K(\mathbf{x}_{n}, \mathbf{x}_{1}) & K(\mathbf{x}_{n}, \mathbf{x}_{2}) & \cdots & K(\mathbf{x}_{n}, \mathbf{x}_{n}) 
+        \end{bmatrix}
+        $$
+
+        As we can see, the matrix contains the value of the kernel on each of the inner products (generalization of the dot product) of every pair of data in the dataset. Now that we have defined $G$, we can define the second condition, which states that this Gram matrix must be
+        <b>positive semidefinite</b>, meaning the matrix must be greater than or equal to 0. This condition ensures that the dual problem is convex, guaranteeing convergence to a global optimum [Foundations of Machine Learning - Mohri]. For a more mathematically rigorous and in-depth explanation of these conditions, 
+        I recommend <a href="https://www.cs.cmu.edu/~aarti/Class/10701_Spring14/KernelTheory.pdf" style="color: rgb(89,74,226)">this presentation</a>.
+    </p>
+</div>
+@code {
+
+}
